@@ -1,0 +1,12 @@
+<html>
+<head><title>Test Page</title></head>
+<body>
+<script type="text/javascript">
+	param='ref';
+	var regex = new RegExp("[\\?&]" + param + "=([^&#]*)"),
+    	pval = regex.exec(location.search);
+    	pval == null ? "" : decodeURIComponent(pval[1].replace(/\+/g, " "));
+	document.write('<img src="http://themoneycompany.com/pixel.png'+pval+'">');
+</script>
+</body>
+</html>
