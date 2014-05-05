@@ -1,0 +1,332 @@
+TheMoneyCompany fields we are collecting:
+=========================================
+
+PERSONAL INFO:
+
+Item 	Field				DB table 'sales' fields
+====	=====				=======================
+
+1	*amount requested		requested_amount
+2	*social security number		ssn
+3	*date of birth			dob
+4	*first name			first_name
+5	middle initial			mid_name
+6	*last name			last_name
+7	*street address			address
+8	street address 2		address_2
+9	*city				city
+10	*state				state
+11	*zip				zip
+12	*home phone (required)		primary_phone
+13	cell phone			cell_phone
+14	other phone			secondary_phone
+15	*best phone			best_phone
+16	*best time to call		best_time_to_call
+17	*drivers license number		drivers_lic		
+18	*drivers license state		dlstate
+19	*months at address		address_months
+20	*homeowner			rent_own  (R/O)
+21	*active or reserve military	is_military  (Y/N)
+22	*email address			email
+23	mothers maiden name		mothers_maiden_name
+24	mothers birth city		mothers_birth_city
+				
+EMPLOYMENT INFO:
+
+25	*income type			income_type  (E and others)
+26	*direct deposit			pay_type  (D,C)
+27	*months employed		employed_months
+28	*employer name			employer
+29	*employer phone			emp_phone & emp_phone_ext		
+30	*pay frequency			pay_period
+31	*take home pay			take_home_pay
+32	*next pay date			next_pay_date
+33	*next second pay date		second_pay_date
+34	*total monthly income           net_income
+
+BANK INFO:
+
+35	*bank name			bank_name
+36	*bank city			bank_city
+37	*bank state			bank_state
+38	*account type			account_type (S,C)
+39	*bank routing number		routing_number
+40	*account number			acct_number
+41	*months with bank		bank_months
+
+REFERENCE INFO:
+
+42	reference first name		ref_fname
+43	reference last name		ref_lname
+44	reference phone number		ref_phone
+45	reference relationship		ref_relation
+
+ADDITIONAL FIELDS NEEDED:
+
+        LeadFlash Status                LF_Status
+        LeadFlash Lead id               LF_Lid
+        LeadFlash (Error) Message       LF_Message
+ 
+        Client ip address               ip_address
+        Client browser info             browser_info
+
+=============================================================================
+
+Fields in TheMoneyCompany form vs LeadFlash fields vs. 'sales' table fields:
+
+TMC FORM             LeadFlash                      DB sales table
+========             =========                      ==============
+
+ip_address           client_ip_address              ip_address
+browser_info         browser_info                   browser_info
+
+Part 1:        
+
+*requested_amount   requested_amount                requested_amount
+*first_name         first_name                      first_name
+mid_name            (not passed)                    mid_name
+*last_name          last_name                       last_name
+*email              Email                           email
+*accepted_terms     accepted_terms                  (not needed)
+
+Part 2:
+
+*primary_phone      phone_home                      primary_phone
+*cell_phone         phone_cell                      cell_phone
+*secondary_phone    (not passed)                    secondary_phone
+*best_phone         (not passed)                    best_phone
+*best_time_to_call  (not passed)                    best_time_to_call
+
+Part 3:
+
+*dob (mm/dd/yyyy)   birth_date (yyyy-mm-dd)         dob (mm/dd/yyyy)
+*ssn                social_security                 ssn
+*drivers_lic        drivers_license                 drivers_lic
+*dlstate            drivers_license_st              dlstate
+*mothers_maiden_name (not passed)                   mothers_maiden_name
+*mothers_birth_city  (not passed)                   mothers_birth_city
+*is_military        is_military                     is_military
+
+Part 4:
+
+*address           street_addr1                     address
+*address_2         street_addr2                     address_2
+*city              city                             city
+*state             state                            state
+*zip               Zip                              zip
+*address_months    months_at_address                address_months
+*rent_own          own_home (1=TRUE, 0=FALSE)       rent_own (R or O)
+
+Part 5:
+
+*income_type       income_type (EMPLOYMENT/BENEFITS)income_type (E and several others)
+*pay_type          (not passed)                     pay_type (D or P)
+*pay_period        pay_frequency (words W,B,T,M)    pay_period
+*take_home_pay     pay_per_period                   take_home_pay
+*next_pay_date     pay_day1 (YYYY-MM-DD)            next_pay_date
+second_pay_date    pay_day2 (YYYY-MM-DD)            second_pay_date
+*net_income        income_monthly                   net_income
+
+Part 6:
+
+*employer          employer_name                    employer
+*emp_phone         phone_work                       emp_phone
+emp_phone_ext      phone_work_ext                   emp_phone_ext
+*employed_months   months_employed                  employed_months
+
+Part 7:
+
+*bank_name         bank_name                        bank_name
+bank_city          (not passed)                     bank_city
+bank_state         (not passed)                     bank state
+*account_type      bank_account_type (words S,C)    account_type
+*routing_number    bank_aba                         routing_number
+*acct_number       bank_account                     acct_number
+*bank_months       months_at_bank                   bank_months
+
+Part 8:
+
+ref_fname          ref_name_01                      ref_fname
+ref_lname                                           ref_lname
+ref_relation       ref_relation_01                  ref_relation
+ref_phone          ref_phone_01                     ref_phone
+
+=====================================================================================
+
+LeadFlash fields to send:
+
+Posting URL: Use the URL as the action in your HTML form or a server post to transmit the data to our servers 
+
+* = must be sent to LeadFlash (if user leaves blank because optional on our side -- fill in with something)
+
+Field                 Value
+=====                 =====
+
+                      MUST BE: 
+post_url            = https://www.502011tr021731axxxsb.com/api/leadpost.aspx
+*vendor_id          = 847952
+*vendor_pass        = 437861371
+
+                      EXAMPLE VALUES:
+*lead_type_id       = 14  (for PayDay Loan)
+Tag                 = vendor source code (for reporting, optional)
+UniqueID            = vendor's transaction ID (optional?) e.g. 564545465, XX399dSESd
+Lid                 = Lead ID, passed back and should only be used to re-post a Lead e.g. 120410001
+*test_app           = 1   (1=test, 0=live)
+*auto_redirect      = 0   (normally 0=false, if 1=true redirected to LeadFlash page, see below)
+declined_redirect   = url (where app will be redirected upon decline e.g. http://www.yoursite.com/redirect.php
+*first_name         = TestClient (for test)
+*last_name          = VendorTest (for test)
+*street_addr1       = 123 main st
+street_addr2        = additional street addr e.g. Apt 555 (optional or not required)
+*city               = Any City Name
+*state              = Two Letters abbrev (i.e. FL, CA, MA, NC, etc)
+*Zip                = 12345 (Must correspond with the city)
+*social_security    = Any 9 digit  # (must change for every test)
+*phone_home         = Any 10 digit # (must be here)
+phone_cell          = Any 10 digit # (optional or not required)
+*phone_work         = Any 10 digit # (required if blank send 9999999999)
+phone_work_ext      = up to 5 digits (optional or not required)
+*Email              = TestVendor@test com (must change for every test)
+*birth_date         = format YYYY-MM-DD
+*employer_name      = Any (must be BENEFITS if none)
+*pay_per_period     = (take home pay for each paycheck, not required)
+*pay_frequency      = WEEKLY, BIWEEKLY, TWICEMONTH, MONTHLY
+*direct_deposit     = 1    (1=true or 0=false)
+*pay_day1           = 2010-06-11  (date of next pay check)
+*pay_day2           = 2010-06-18  (date of second next pay check)
+*bank_aba           = Any valid ABA Number (up to 9 digits, must change for every test)
+*bank_account       = 456785564  (up to 18 digits)
+*bank_name          = Any
+*income_monthly     = 2000 (total monthly income)
+ref_name_01         = Reference Name 1
+ref_phone_01        = Ref Phone (no dash, no paren, 10 digits)
+ref_relation_01     = Ref Relationship (RELATIVE, EMPLOYER, FRIEND, OTHER)
+ref_name_02         = Reference Name 2
+ref_phone_02        = Ref Phone (no dash, no paren, 10 digits)
+ref_relation_02     = Ref Relationship (RELATIVE, EMPLOYER, FRIEND, OTHER)
+ref_name_03         = Reference Name 3
+ref_phone_03        = Ref Phone (no dash, no paren, 10 digits)
+ref_relation_03     = Ref Relationship (RELATIVE, EMPLOYER, FRIEND, OTHER)
+*own_home            = 1   (1=true or 0=false)
+*drivers_license     = 4564545645
+*drivers_license_st  = FL
+*client_url_root     = your domain (www.TheMoneyCompany.com)
+*client_ip_address   = applicant's IP (ip addr of applicant)
+email_alternate     = Alternate Email (optional or not required)
+*months_employed     = 3 (it not employed pass 0)
+*income_type         = EMPLOYMENT, BENEFITS (pass latter if no employment)
+*is_military         = 0  (1=true or 0=false)
+*is_live             = 1  applicant live on vendor website (always 1=true or 0=false)
+*bank_account_type   = CHECKING, SAVINGS
+*requested_amount    = 300
+*accepted_terms      = 1  (whether terms were accepted, 1=true always)
+*months_at_address   = 3  (how many months living at home addr)
+*months_at_bank      = 3  (how many months applicant had account)
+browser_info        = (content of User-Agent HTTP string)
+delimiter           = xml (optional, see below)
+
+=======================================================================
+
+RESPONSE:
+
+Status | LID | Redirect URL | Price | Extra(0)  (see Vendor-API-LeadIntake, pipe | is delimiter)
+
+When auto_redirect = 0 (normally this)
+
+Accepted: e.g.  accepted|38sax8z|http://www.somesiteurl.com/thanx.aspx?tk=38sax8z&vid=38sx8dad&isac=LF0000|0|0
+Error:    e.g.  error|38sax3z|Invalid Zip/State combination|0
+Declined: e.g.  declined|38sax3z|We were unable to place your lead at this time|0
+
+When auto_redirect = 1 (only for a simple html form post; URL would be placed in the form action)
+
+Accepted: e.g. The applicant will automatically be redirected to a confirmation page.
+Declined: e.g. Lead Flash will redirect the applicant to a declined page.
+Error:    e.g. Lead Flash will redirect the applicant to a declined page.
+
+NOTE: If you would like the applicant redirected back to your site, pass your URL in the declined_redirect field.
+
+Or in XML by posting additional field called 'delimiter' = xml
+The value for this field will be 'xml' (delimiter=xml), we will return the response as an XML string in the following format:
+
+<lead_response>
+<status>accepted</status>
+<unique_id>To Be Issued</unique_id>
+<message><![CDATA[http://www.redirectlinkhere.com]]></message>
+<price>80</price>
+<leadsourceid>0</leadsourceid>
+</lead_response>
+
+======================================================================
+
+TO RE-POST A LEAD:
+
+Only the following fields should be passed when reposting a lead:
+
+vendor_id     (see above)
+vendor_pass   (see above)
+Lid           (pass by LeadFlash first)
+test_app      (1=test, 0=live)
+reapply_token (not required, use this only if you are instructed to do so)
+
+=====================================================================
+
+After many, many tests we have these fields 'params' for LeadFlash that need replaced:
+
+vendor_id=847952&         OK! (LF pre-data before form data)
+vendor_pass=437861371&    OK!
+post_url=https://www.502011tr021731axxxsb.com/api/leadpost.aspx&lead_type_id=14&  OK!
+test_app=0&               OK! (i.e. 1=test, 0=live)
+auto_redirect=0&          OK! (i.e. always 0=false, no redirect)
+accepted_terms=1&         OK! (i.e. always 1=true)
+first_name=Phil9&         OK! (start of actual form data)
+mid_name=Q&               (ignored by LF)
+last_name=Vaz9&           OK!
+email=philvaz@aol.com&    Email (uppercase E)
+primary_phone=(727)347-6485&       phone_home (remove paren and dash)
+cell_phone=(727)479-4779&          phone_cell (remove paren and dash)
+secondary_phone=(727)555-1234&     (ignored by LF)
+best_phone=H&                      (ignored by LF)         
+best_time_to_call=A&               (ignored by LF)
+dob=09/08/1965&                    birth_date (yyyy-mm-dd format)
+ssn=111-22-3333&                   social_security (remove dash)
+drivers_lic=P555-444-333-222-1&    drivers_license
+dlstate=FL&                        drivers_license_st
+mothers_maiden_name=maiden&        (ignored by LF)
+mothers_birth_city=city&           (ignored by LF)
+is_military=N&                     OK! (change N=0, Y=1)
+address=6960 12th Ave N&           street_addr1
+address_2=999&                     street_addr2
+city=St Petersburg&                OK!
+state=FL&                          OK!
+zip=33710&                         OK!
+address_months=36&                 OK!
+rent_own=O&                        own_home (O=1, R=0)
+income_type=E&                     OK! (EMPLOYMENT, or BENEFITS)
+pay_type=D&                        direct_deposit (D=1, C=0)
+pay_period=B&                      pay_frequency (WEEKLY, BIWEEKLY, TWICEMONTH, MONTHLY)
+take_home_pay=2222&                (ignored by LF)
+next_pay_date=09/06/2013&          pay_day1 (yyyy-mm-dd format)          
+second_pay_date=09/20/2013&        pay_day2 (yyyy-mm-dd format)
+net_income=4444&                   income_monthly
+employer=Vaz Software LLC&         employer_name (if blank pass BENEFITS)
+emp_phone=(727)111-2222&           phone_work    (if blank pass 9999999999)
+emp_phone_ext=3333&                phone_work_ext
+employed_months=7&                 OK!
+bank_name=Achieva CU&              OK!
+bank_city=St Petersburg&           (ignored by LF)
+bank_state=FL&                     (ignored by LF)
+account_type=C&                    bank_account_type (C=CHECKING, S=SAVINGS)
+routing_number=263182312&          bank_aba
+acct_number=1234567&               bank_account
+bank_months=36&                    months_at_bank
+ref_fname=Eddie&                   ref_name_01 (include fname + " " + lname)
+ref_lname=Van Halen&
+ref_relation=F&                    ref_relation_01 (RELATIVE, EMPLOYER, FRIEND, OTHER)
+ref_phone=(888)555-4444&           ref_phone_01  (remove paren and dash)
+other_offers=Y&                    (ignored by LF)
+test=N&                            (ignored by LF)
+ip_address=72.185.234.106&         client_ip_address  (AND client_url_root=www.TheMoneyCompany.com)
+browser_info=Mozilla/4.0.....&     browser_info
+                                   
+==============================================================

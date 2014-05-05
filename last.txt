@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<result>
+	<code>1</code>
+	<msg>error</msg>
+	<errors>
+		<error>CellPhone2: Valid input for this field is required</error>
+		<error>HomePhone2: Valid input for this field is required</error>
+	</errors>
+</result>
+---
+ckm_campaign_id=2167&ckm_key=14Cs8kKz50&ip_address=test&first_name=Joe&last_name=Shmoe&gender=Male&dob=08/17/1965&is_citizen=1&is_military=0&ssn=123-45-6789&drivers_lic=S222-33-444-555-0&dlstate=FL&email=me@metml.com&primary_phone=(727) 776-2530&secondary_phone=(727) 531-1383&cell_phone=(727) 488-7778&best_time_to_call=Afternoon&address=123 Sesame St&city=Largo&state=FL&zip=33333&address_months=6&address_years=10&rent_own=R&employer=United Nations&emp_years=10&emp_address=42nd St&emp_zip=10017&emp_phone=(212) 963-8687&emp_type=P&job_title=Project Manager&net_income=99999&income_type=E&employed_months=6&pay_period=W&pay_type=D&last_pay_date=06/30/2013&next_pay_date=07/15/2013&second_pay_date=07/30/2013&requested_amount=1000&bank_name=Fred&bank_phone=(212) 555-1212&account_holder=Joe Schmoe&routing_number=000000204&acct_number=99999999&account_type=C&bank_months=6&bank_years=10&ref_fname=Walter&ref_lname=Schmoe&ref_phone=(727) 642-8768&other_offers=1&ref_url=http://themoneycompany.com&test=1&
